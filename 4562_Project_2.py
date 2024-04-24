@@ -57,13 +57,17 @@ def find_privatekey(e, p, q):
     return [d, p, q]
 
 def encode_message(message):
-    return message
+    return [ord(char) - ord('a') for char in message.lower()]
 
 def RSA_encrypt(message, publickey):
-    return ciphertext
+    e = publickey[0]
+    n = publickey[1]
+    return [pow(i, e, n) for i in message]
 
 def RSA_decrypt(ciphertext, privatekey):
-    return message
+    n = privatekey[1]*privatekey[2]
+    d = privatekey[0]
+    return [pow(i, d, n) for i in ciphertext]
 
 message = "rsa"
 message = encode_message(message)
