@@ -23,23 +23,37 @@ def fermat_primechecker(n):
 
 # finds an array of primes inbetween start and end at the listed indicies
 # ie find_primes(1000, 10000, [10, 19]) will return the 10th and 19th primes
-def find_primes(start, end, indicies):
+def find_primes(start, end, indices):
     primes = []
     for i in range(start, end + 1):
         if i > 1:
             for j in range(2, i):
                 if (i % j) == 0:
                     break
-                else:
-                    primes.append(i)
-            if len(primes) == max(indicies):
+            else:
+                primes.append(i)
+            if len(primes) == max(indices):
                 break
-        return [primes[j - 1] for j in indicies]
+    return [primes[j - 1] for j in indices]
 
 def greatest_common_divisor(a, b):
     while b != 0:
         a, b = b , a % b
     return a  
+
+def extended_gcd(a, b):
+    if a == 0:
+        return b, 0, 1
+    else:
+        g, x, y = extended_gcd(b % a, a)
+        return g, y - (b // a) * x, x
+
+def mod_inverse(e, phi):
+    g, x, _ = extended_gcd(e, phi)
+    if g != 1:
+        raise Exception('Modular inverse does not exist')
+    else:
+        return x % phi
 
 def find_e(p, q):
     phi = (p-1)*(q-1)
@@ -54,6 +68,7 @@ def find_publickey(e, p, q):
 
 def find_privatekey(e, p, q):
     phi = (p-1)*(q-1)
+    d = mod_inverse(e, phi)
     return [d, p, q]
 
 def encode_message(message):
