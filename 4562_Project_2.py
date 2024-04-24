@@ -1,14 +1,3 @@
-"""
-Checklist ToDo
-1) take user in and check if prime number
-2) find 10th and 19th prime number (p and q) between 1000-10000
-    Public key PU = {e,n}
-    Private key PR = {d, p, q}
-3) implement encipher and decipher for RSA
-    test with "rsa" encode letters to (0-25)
-4) show if adversary gets PU how exhaustive search to find private key d show time cost
-"""
-
 # using fermats little theorum by checking if 2 ^ n-1 is congruent to 1 % n
 # while this test is 100% i doubt we will run into edge cases in this impementation
 def fermat_primechecker(n):
