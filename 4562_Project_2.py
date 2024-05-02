@@ -30,6 +30,7 @@ def greatest_common_divisor(a, b):
         a, b = b , a % b
     return a  
 
+#found on stackoverflow to compute modular inverse
 def extended_gcd(a, b):
     if a == 0:
         return b, 0, 1
@@ -37,6 +38,8 @@ def extended_gcd(a, b):
         g, x, y = extended_gcd(b % a, a)
         return g, y - (b // a) * x, x
 
+# uses above func to determine the modular inverse found this on a 
+# stackoverflow board (in .math but didnt want to use import)
 def mod_inverse(e, phi):
     g, x, _ = extended_gcd(e, phi)
     if g != 1:
@@ -60,6 +63,7 @@ def find_privatekey(e, p, q):
     d = mod_inverse(e, phi)
     return [d, p, q]
 
+# encodes the message to characters a-z as 0-25
 def encode_message(message):
     return [ord(char) - ord('a') for char in message.lower()]
 
@@ -75,15 +79,16 @@ def RSA_decrypt(ciphertext, privatekey):
 
 message = "rsa"
 message = encode_message(message)
+print(f"Encoded message: {message}")
 primes = find_primes(1000, 10000, [10, 19])
 p = primes[0]
 q = primes[1]
 e = find_e(p, q)
 publickey = find_publickey(e, p, q)
-print(publickey)
+print(f"Public Key: {publickey}")
 privatekey = find_privatekey(e, p, q)
-print(privatekey)
+print(f"Private Key: {privatekey}")
 ciphertext = RSA_encrypt(message, publickey)
-print(ciphertext)
+print(f"Ciphertext: {ciphertext}")
 checkmessage = RSA_decrypt(ciphertext, privatekey)
-print(checkmessage)
+print(f"Decrypted Message: {checkmessage}")
